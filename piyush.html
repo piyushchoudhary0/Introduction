@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piyush Choudhary — AI/ML Student · Creator · Tech Enthusiast</title>
+<meta name="description" content="Piyush Choudhary — 19-year-old B.Tech AI/ML student from Jodhpur, India. Building the version of himself he imagines.">
+<meta property="og:title" content="Piyush Choudhary">
+<meta property="og:description" content="AI/ML Student · Creator · Tech Enthusiast — Jodhpur, India">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230A0B0D'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Georgia' fill='%235EE1FF' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg:#0A0B0D;
+  --bg-soft:#101216;
+  --paper:#F2F1ED;
+  --grey:rgba(242,241,237,0.56);
+  --grey-dim:rgba(242,241,237,0.32);
+  --line:rgba(242,241,237,0.12);
+  --cyan:#5EE1FF;
+  --violet:#8B7CF6;
+  --glass:rgba(255,255,255,0.04);
+  --glass-border:rgba(255,255,255,0.10);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--paper);
+  font-family:'Inter',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+::selection{background:var(--cyan);color:#0A0B0D;}
+.wrap{max-width:1240px;margin:0 auto;padding:0 44px;}
+.mono{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey);}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:600;margin:0;letter-spacing:-0.01em;}
+p{margin:0;}
+button{font-family:inherit;background:none;border:none;color:inherit;cursor:pointer;}
+
+/* faint background grid */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size:64px 64px;
+  opacity:0.35;
+  mask-image:radial-gradient(ellipse 90% 60% at 50% 0%, black 0%, transparent 75%);
+}
+
+/* custom cursor */
+.cursor-dot,.cursor-ring{
+  position:fixed;top:0;left:0;z-index:9999;pointer-events:none;
+  border-radius:50%;transform:translate(-50%,-50%);
+}
+.cursor-dot{width:6px;height:6px;background:var(--cyan);transition:opacity .2s ease;}
+.cursor-ring{width:34px;height:34px;border:1px solid var(--glass-border);transition:width .25s ease,height .25s ease,border-color .25s ease,opacity .2s ease;}
+.cursor-ring.hovering{width:56px;height:56px;border-color:var(--cyan);}
+body.no-cursor .cursor-dot,body.no-cursor .cursor-ring{display:none;}
+@media (hover:hover) and (pointer:fine){ body.js-cursor-ready{ cursor:none; } body.js-cursor-ready a, body.js-cursor-ready button{ cursor:none; } }
+
+/* ============ NAV ============ */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:26px 0;backdrop-filter:blur(10px);background:linear-gradient(to bottom, rgba(10,11,13,0.75), transparent);}
+nav .wrap{display:flex;justify-content:space-between;align-items:center;}
+.nav-name{font-family:'Space Grotesk';font-weight:600;font-size:1rem;letter-spacing:0.02em;}
+.nav-name span{color:var(--cyan);}
+.nav-links{display:flex;gap:30px;}
+.nav-links a{font-family:'IBM Plex Mono';font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--grey);position:relative;padding-bottom:4px;transition:color .25s ease;}
+.nav-links a:hover{color:var(--paper);}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--cyan);transition:width .3s ease;}
+.nav-links a:hover::after{width:100%;}
+
+/* ============ BUTTONS ============ */
+.btn{
+  font-family:'IBM Plex Mono';font-size:0.78rem;letter-spacing:0.04em;
+  padding:15px 28px;border-radius:100px;display:inline-flex;align-items:center;gap:10px;
+  transition:transform .25s ease, background .25s ease, color .25s ease, border-color .25s ease;
+}
+.btn-primary{background:var(--paper);color:var(--bg);}
+.btn-primary:hover{background:var(--cyan);}
+.btn-ghost{border:1px solid var(--glass-border);color:var(--paper);}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);}
+
+/* ============ HERO ============ */
+.hero{min-height:100vh;position:relative;display:flex;align-items:center;padding-top:70px;}
+#particle-canvas{position:absolute;inset:0;z-index:0;opacity:0.55;}
+.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.3fr 0.9fr;gap:40px;align-items:center;width:100%;}
+.hero-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:28px;}
+.hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan);}
+.hero h1{
+  font-size:clamp(2.6rem,6.6vw,5.4rem);
+  line-height:0.98;text-transform:uppercase;
+}
+.hero .headline{
+  margin-top:26px;font-family:'Space Grotesk';font-weight:500;font-size:clamp(1.3rem,2.6vw,1.9rem);
+  max-width:600px;line-height:1.3;color:var(--paper);
+}
+.hero .sub{margin-top:20px;font-size:1rem;line-height:1.7;color:var(--grey);max-width:520px;}
+.hero .cta-row{display:flex;gap:18px;margin-top:42px;flex-wrap:wrap;}
+
+/* hero glass panel */
+.hero-panel{
+  background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;
+  padding:30px;backdrop-filter:blur(16px);position:relative;overflow:hidden;
+  transform-style:preserve-3d;transition:transform .1s ease-out;
+}
+.hero-panel::before{
+  content:"";position:absolute;top:-40%;right:-40%;width:80%;height:80%;
+  background:radial-gradient(circle,rgba(94,225,255,0.18),transparent 70%);pointer-events:none;
+}
+.hero-panel .id{font-family:'Space Grotesk';font-size:1.6rem;font-weight:600;letter-spacing:0.02em;margin-bottom:22px;}
+.hero-panel .id span{color:var(--cyan);}
+.hero-panel .meta-row{display:flex;justify-content:space-between;padding:11px 0;border-top:1px solid var(--line);font-family:'IBM Plex Mono';font-size:0.72rem;}
+.hero-panel .meta-row:last-child{border-bottom:1px solid var(--line);}
+.hero-panel .meta-row .k{color:var(--grey-dim);text-transform:uppercase;letter-spacing:0.08em;}
+.hero-panel .status{display:flex;align-items:center;gap:8px;margin-top:20px;font-family:'IBM Plex Mono';font-size:0.68rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.1em;}
+.hero-panel .status .pulse{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 1.8s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(1.4);}}
+
+.scroll-cue{position:absolute;bottom:40px;left:44px;z-index:2;font-family:'IBM Plex Mono';font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--grey-dim);display:flex;align-items:center;gap:10px;}
+.scroll-cue .ln{width:1px;height:36px;background:var(--line);position:relative;overflow:hidden;}
+.scroll-cue .ln span{position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--cyan);animation:dropline 2.2s ease-in-out infinite;}
+@keyframes dropline{0%{top:-100%;}60%{top:100%;}100%{top:100%;}}
+
+/* ============ SECTION SHELL ============ */
+section{padding:150px 0;position:relative;z-index:1;}
+.section-tag{display:flex;align-items:baseline;gap:14px;margin-bottom:50px;}
+.section-tag .n{font-family:'IBM Plex Mono';font-size:0.7rem;color:var(--cyan);}
+.section-tag .t{font-family:'IBM Plex Mono';font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey);}
+.big-line{font-size:clamp(1.7rem,3.6vw,3rem);line-height:1.18;max-width:820px;font-family:'Space Grotesk';font-weight:500;}
+.big-line .fade{color:var(--grey);}
+
+/* split-line reveal (reused engine) */
+.split-line{display:block;overflow:hidden;padding-bottom:0.1em;}
+.split-line .line-inner{display:block;transform:translateY(115%);transition:transform 0.95s cubic-bezier(.16,1,.3,1);}
+.split-line.in .line-inner{transform:translateY(0);}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* floating personality tags */
+.floating-tag{
+  position:absolute;font-family:'IBM Plex Mono';font-size:0.66rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--grey-dim);border:1px solid var(--line);padding:7px 14px;border-radius:100px;
+  pointer-events:none;white-space:nowrap;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .reveal,.split-line .line-inner{transition:none!important;opacity:1!important;transform:none!important;}
+  .scroll-cue .ln span,.hero-panel .status .pulse{animation:none;}
+}
+/* ============ CURRENTLY CARDS ============ */
+.cc-card{background:var(--bg);padding:34px 28px;transition:background .3s ease;}
+.cc-card .icon{font-size:1.5rem;display:block;margin-bottom:16px;filter:grayscale(0.3);}
+.cc-card h3{font-size:1.1rem;margin-bottom:10px;}
+.cc-card p{color:var(--grey);font-size:0.9rem;line-height:1.6;}
+.cc-card:hover{background:var(--bg-soft);}
+.cc-empty{display:flex;align-items:center;justify-content:center;color:var(--grey-dim);}
+.tilt-card{will-change:transform;transform-style:preserve-3d;}
+
+/* ============ SKILLS ORBIT ============ */
+.orbit-wrap{display:flex;justify-content:center;}
+.orbit-stage{position:relative;width:520px;height:520px;max-width:100%;}
+.orbit-center{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:120px;height:120px;border-radius:50%;
+  background:radial-gradient(circle,rgba(94,225,255,0.14),rgba(139,124,246,0.06));
+  border:1px solid var(--glass-border);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Grotesk';font-weight:600;font-size:0.95rem;letter-spacing:0.04em;
+  z-index:2;backdrop-filter:blur(6px);
+}
+.orbit-ring{position:absolute;top:50%;left:50%;border:1px dashed var(--line);border-radius:50%;transform:translate(-50%,-50%);}
+.orbit-node{
+  position:absolute;top:50%;left:50%;
+  font-family:'IBM Plex Mono';font-size:0.72rem;white-space:nowrap;
+  background:var(--bg);border:1px solid var(--glass-border);border-radius:100px;
+  padding:8px 16px;transition:border-color .3s ease,color .3s ease;color:var(--grey);
+}
+.orbit-node:hover{border-color:var(--cyan);color:var(--cyan);}
+
+.skill-cat{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:28px 26px;}
+.skill-list{font-family:'IBM Plex Mono';font-size:0.85rem;color:var(--grey);line-height:2.1;margin-top:14px;}
+
+/* ============ MARQUEE ============ */
+.marquee-strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:22px 0;white-space:nowrap;position:relative;z-index:1;background:var(--bg-soft);}
+.marquee-track{display:inline-flex;animation:marquee 30s linear infinite;}
+.marquee-track span{font-family:'Space Grotesk';font-weight:500;font-size:1.05rem;text-transform:uppercase;letter-spacing:0.03em;color:var(--grey);padding:0 26px;display:inline-flex;align-items:center;gap:26px;}
+.marquee-track span::after{content:"◆";color:var(--cyan);font-size:0.55rem;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ============ CONTENT CARDS ============ */
+.content-card{background:var(--bg-soft);border:1px solid var(--line);border-radius:16px;padding:30px;}
+.content-card h3{margin:12px 0 10px;font-size:1.3rem;}
+.content-card p{color:var(--grey);font-size:0.92rem;line-height:1.6;}
+.mock-bars{display:flex;align-items:flex-end;gap:6px;height:44px;margin:22px 0;}
+.mock-bars span{flex:1;background:linear-gradient(to top,var(--cyan),transparent);border-radius:3px 3px 0 0;opacity:0.5;}
+.mock-bars span:nth-child(1){height:40%;} .mock-bars span:nth-child(2){height:70%;} .mock-bars span:nth-child(3){height:55%;}
+.mock-bars span:nth-child(4){height:90%;} .mock-bars span:nth-child(5){height:35%;} .mock-bars span:nth-child(6){height:65%;}
+.link-arrow{display:inline-block;font-size:0.7rem;color:var(--grey-dim);border-top:1px solid var(--line);padding-top:16px;width:100%;transition:color .25s ease;}
+.link-arrow:hover{color:var(--cyan);}
+
+/* ============ HARDWARE ============ */
+.hw-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.hw-chip{border:1px solid var(--glass-border);border-radius:12px;padding:22px;cursor:pointer;transition:border-color .25s ease,background .25s ease;background:var(--bg-soft);}
+.hw-chip:hover,.hw-chip.active{border-color:var(--cyan);background:rgba(94,225,255,0.06);}
+.hw-chip .mono{color:var(--grey-dim);}
+.hw-chip h3{font-size:1rem;margin-top:8px;}
+.hw-info{border:1px solid var(--line);border-radius:16px;padding:34px;min-height:220px;background:var(--bg-soft);position:sticky;top:110px;}
+
+/* ============ JOURNEY TIMELINE ============ */
+.timeline-scroll{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding-bottom:10px;}
+.timeline-scroll::-webkit-scrollbar{display:none;}
+.timeline-track{display:flex;gap:22px;padding:0 44px 20px;width:max-content;}
+.tl-card{width:280px;flex-shrink:0;border:1px solid var(--line);border-radius:16px;padding:28px;background:var(--bg-soft);}
+.tl-card h3{margin:12px 0 10px;font-size:1.2rem;}
+.tl-card p{color:var(--grey);font-size:0.9rem;line-height:1.6;}
+.tl-future{border-color:var(--violet);background:rgba(139,124,246,0.06);}
+
+/* ============ TRAVEL ============ */
+.travel-card{border:1px solid var(--line);border-radius:14px;padding:26px 20px;background:var(--bg-soft);transition:transform .25s ease,border-color .25s ease;}
+.travel-card:hover{border-color:var(--cyan);}
+.travel-card h3{font-size:1.15rem;margin-bottom:8px;}
+.travel-card .mono{font-size:0.62rem;color:var(--grey-dim);}
+
+/* ============ PROJECTS ============ */
+.project-card{background:var(--bg);padding:34px 26px;min-height:150px;display:flex;flex-direction:column;justify-content:space-between;}
+.project-card h3{margin-top:20px;font-size:1.05rem;color:var(--grey);}
+
+/* ============ LEARNING PHILOSOPHY ============ */
+.philosophy-chain{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:60px;}
+.phi-word{font-family:'Space Grotesk';font-weight:600;font-size:clamp(1.6rem,5vw,3rem);color:var(--grey-dim);transition:color .5s ease,transform .5s ease;letter-spacing:0.02em;}
+.phi-word.lit{color:var(--paper);}
+.phi-word.phi-final.lit{color:var(--cyan);}
+.phi-arrow{color:var(--grey-dim);font-size:1.2rem;}
+
+/* ============ FOOTER ============ */
+footer{border-top:1px solid var(--line);padding:44px 0;position:relative;z-index:1;}
+.footer-inner{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px;}
+
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr;}
+  .hero-panel{margin-top:40px;}
+  .nav-links{display:none;}
+  .wrap{padding:0 24px;}
+  section{padding:100px 0;}
+  .floating-tag{display:none;}
+  .about-body,.currently-grid,.skill-cats,.content-grid,.hw-layout,.travel-grid,.projects-grid{grid-template-columns:1fr!important;}
+  .orbit-stage{transform:scale(0.72);}
+  .footer-inner{flex-direction:column;text-align:left;}
+  .footer-inner > div:last-child{text-align:left;}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-name">PIYUSH<span>.</span>CH</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#currently">Currently</a>
+      <a href="#skills">Skills</a>
+      <a href="#journey">Journey</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="hero">
+  <canvas id="particle-canvas"></canvas>
+  <div class="wrap">
+    <div>
+      <div class="hero-eyebrow"><span class="dot"></span><span class="mono">AI/ML Student · Creator · Tech Enthusiast</span></div>
+      <h1>Piyush<br>Choudhary</h1>
+      <p class="headline" data-split>Building the version of myself I imagine.</p>
+      <p class="sub">B.Tech AI/ML student exploring technology, creativity, content and everything that makes the digital world fascinating.</p>
+      <div class="cta-row">
+        <a href="#journey" class="btn btn-primary magnetic">Explore My Journey →</a>
+        <a href="#contact" class="btn btn-ghost magnetic">Let's Connect ↗</a>
+      </div>
+    </div>
+    <div class="hero-panel" id="heroPanel">
+      <div class="id">PYUSH<span>.CH</span></div>
+      <div class="meta-row"><span class="k">Age</span><span>19</span></div>
+      <div class="meta-row"><span class="k">Location</span><span>Jodhpur, India</span></div>
+      <div class="meta-row"><span class="k">Field</span><span>AI/ML Student</span></div>
+      <div class="status"><span class="pulse"></span>Building in public</div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span class="ln"><span></span></span>Scroll</div>
+</header>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap" style="position:relative;">
+    <span class="floating-tag" style="top:-30px;right:60px;transform:rotate(4deg);">Curious by default.</span>
+    <div class="section-tag"><span class="n">( 01 )</span><span class="t">About</span></div>
+    <p class="big-line" data-split>A little about me. <span class="fade">Still early — and that's exactly the point.</span></p>
+
+    <div class="about-body" style="display:grid;grid-template-columns:1.3fr 0.9fr;gap:60px;margin-top:70px;">
+      <div>
+        <p style="font-size:1.05rem;line-height:1.8;color:var(--grey);" data-split>I'm Piyush — a 19-year-old B.Tech AI/ML student from Jodhpur, Rajasthan. Technology has always been something I enjoy exploring, whether it's understanding how computer hardware works, learning Python, experimenting with content, editing videos, or managing digital platforms.</p>
+        <p style="font-size:1.05rem;line-height:1.8;color:var(--grey);margin-top:22px;" data-split>I'm still early in my journey, but that's exactly what makes it exciting. I'm constantly learning, experimenting and trying to understand what I can build with technology.</p>
+      </div>
+      <div class="about-timeline" style="display:flex;flex-direction:column;gap:0;border-left:1px solid var(--line);padding-left:26px;">
+        <div class="mono" style="margin-bottom:18px;color:var(--cyan);">The path so far</div>
+        <div style="display:flex;flex-direction:column;gap:22px;font-family:'Space Grotesk';font-size:1rem;">
+          <span>School</span>
+          <span style="color:var(--grey);">↓ Curiosity</span>
+          <span style="color:var(--grey);">↓ Content</span>
+          <span style="color:var(--grey);">↓ Technology</span>
+          <span style="color:var(--grey);">↓ AI/ML</span>
+          <span style="color:var(--cyan);">↓ Future</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CURRENTLY ============ -->
+<section id="currently">
+  <div class="wrap">
+    <div class="section-tag"><span class="n">( 02 )</span><span class="t">Currently</span></div>
+    <p class="big-line" data-split>What I'm doing <span class="fade">right now, in real time.</span></p>
+
+    <div class="currently-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:70px;border:1px solid var(--line);">
+      <div class="tilt-card cc-card"><span class="icon">🎓</span><h3>Learning</h3><p>B.Tech Artificial Intelligence &amp; Machine Learning</p></div>
+      <div class="tilt-card cc-card"><span class="icon">🐍</span><h3>Coding</h3><p>Learning Python and strengthening programming fundamentals</p></div>
+      <div class="tilt-card cc-card"><span class="icon">🎬</span><h3>Creating</h3><p>Managing and creating content for Instagram &amp; YouTube</p></div>
+      <div class="tilt-card cc-card"><span class="icon">🖥️</span><h3>Exploring</h3><p>Computer hardware, PCs and technology</p></div>
+      <div class="tilt-card cc-card"><span class="icon">🌍</span><h3>Dreaming</h3><p>Travelling around the world and experiencing new places</p></div>
+      <div class="tilt-card cc-card cc-empty"><span class="mono">More soon →</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills">
+  <div class="wrap" style="position:relative;">
+    <span class="floating-tag" style="top:10px;left:-10px;transform:rotate(-3deg);">Tech obsessed.</span>
+    <div class="section-tag"><span class="n">( 03 )</span><span class="t">Skills</span></div>
+    <p class="big-line" data-split>What I'm working with <span class="fade">— honestly categorized.</span></p>
+
+    <div class="orbit-wrap" style="margin-top:70px;">
+      <div class="orbit-stage" id="orbitStage">
+        <div class="orbit-center">PIYUSH</div>
+        <!-- orbit nodes injected by JS -->
+      </div>
+    </div>
+
+    <div class="skill-cats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line);margin-top:60px;">
+      <div class="skill-cat"><span class="mono" style="color:var(--cyan);">Currently learning</span><div class="skill-list">Python<br>AI / ML<br>Data Structures<br>Programming Fundamentals</div></div>
+      <div class="skill-cat"><span class="mono">Comfortable with</span><div class="skill-list">Computer Hardware<br>PC Building<br>Video Editing<br>Content Management<br>Social Media Management</div></div>
+      <div class="skill-cat"><span class="mono" style="color:var(--violet);">Exploring</span><div class="skill-list">Machine Learning<br>Generative AI<br>Web Development<br>Automation<br>Advanced Programming</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TECH STACK MARQUEE ============ -->
+<div class="marquee-strip">
+  <div class="marquee-track" id="marqueeTrack"></div>
+</div>
+
+<!-- ============ CONTENT CREATION ============ -->
+<section id="content">
+  <div class="wrap">
+    <div class="section-tag"><span class="n">( 04 )</span><span class="t">Behind the Screen</span></div>
+    <p class="big-line" data-split>The creative side <span class="fade">of the technology I work with.</span></p>
+
+    <div class="content-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:70px;">
+      <div class="content-card tilt-card">
+        <span class="mono" style="color:var(--cyan);">YouTube</span>
+        <h3>Content &amp; edits</h3>
+        <p>Content management, video planning and editing.</p>
+        <div class="mock-bars"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <a href="#" class="mono link-arrow">[YOUR YOUTUBE LINK] →</a>
+      </div>
+      <div class="content-card tilt-card">
+        <span class="mono" style="color:var(--cyan);">Instagram</span>
+        <h3>Strategy &amp; posts</h3>
+        <p>Content management, creative strategy and social media.</p>
+        <div class="mock-bars"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <a href="#" class="mono link-arrow">[YOUR INSTAGRAM LINK] →</a>
+      </div>
+      <div class="content-card tilt-card">
+        <span class="mono" style="color:var(--cyan);">Video Editing</span>
+        <h3>Raw → story</h3>
+        <p>Turning raw footage into engaging visual stories.</p>
+        <div class="mock-bars"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <a href="#" class="mono link-arrow">[YOUR SHOWREEL LINK] →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HARDWARE ============ -->
+<section id="hardware">
+  <div class="wrap">
+    <div class="section-tag"><span class="n">( 05 )</span><span class="t">Hardware</span></div>
+    <p class="big-line" data-split>I don't just use computers. <span class="fade">I like understanding them.</span></p>
+
+    <div class="hw-layout" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:70px;align-items:start;">
+      <div class="hw-grid" id="hwGrid"></div>
+      <div class="hw-info" id="hwInfo">
+        <span class="mono" style="color:var(--cyan);">Hover a component</span>
+        <h3 style="margin-top:14px;font-size:1.5rem;">Explore the build</h3>
+        <p style="margin-top:12px;color:var(--grey);line-height:1.7;">Each part of a PC does one job well. Hover over a component on the left to see what it does.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JOURNEY ============ -->
+<section id="journey">
+  <div class="wrap">
+    <span class="floating-tag" style="top:0;right:0;transform:rotate(3deg);">No shortcuts.</span>
+    <div class="section-tag"><span class="n">( 06 )</span><span class="t">Journey</span></div>
+    <p class="big-line" data-split>The timeline so far <span class="fade">— and where it's headed.</span></p>
+  </div>
+  <div class="timeline-scroll" id="timelineScroll" style="margin-top:60px;">
+    <div class="timeline-track">
+      <div class="tl-card"><span class="mono" style="color:var(--cyan);">2023</span><h3>Class 10</h3><p>Completed Class 10.</p></div>
+      <div class="tl-card"><span class="mono" style="color:var(--cyan);">2024 — 2025</span><h3>Exploring</h3><p>Explored academics, technology and content creation.</p></div>
+      <div class="tl-card"><span class="mono" style="color:var(--cyan);">2026</span><h3>Class 12</h3><p>Completed Class 12 from PM SHRI KV No. 2 AFS Jodhpur.</p></div>
+      <div class="tl-card"><span class="mono" style="color:var(--cyan);">2026</span><h3>B.Tech Begins</h3><p>Started B.Tech in Artificial Intelligence &amp; Machine Learning.</p></div>
+      <div class="tl-card"><span class="mono" style="color:var(--cyan);">2026 → Future</span><h3>In progress</h3><p>Learning. Building. Experimenting.</p></div>
+      <div class="tl-card tl-future"><span class="mono" style="color:var(--violet);">Future</span><h3>Beyond the ordinary</h3><p>Build meaningful technology, travel the world and create a life beyond the ordinary.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DREAM ============ -->
+<section id="dream" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap" style="text-align:center;">
+    <div class="section-tag" style="justify-content:center;"><span class="n">( 07 )</span><span class="t">The Dream</span></div>
+    <h2 style="font-size:clamp(3rem,10vw,7rem);line-height:0.9;" data-split>Before 30.</h2>
+    <p class="mono" style="margin-top:26px;font-size:0.85rem;letter-spacing:0.2em;">Build. Travel. Learn. Experience.</p>
+
+    <div class="garage" style="margin-top:60px;display:flex;justify-content:center;gap:60px;">
+      <svg width="180" height="90" viewBox="0 0 180 90" fill="none"><ellipse cx="90" cy="80" rx="80" ry="6" fill="rgba(94,225,255,0.08)"/><path d="M15 65 Q20 35 55 32 L70 20 L125 20 L145 34 Q170 38 170 62 L170 68 L15 68 Z" stroke="var(--grey-dim)" stroke-width="1.5"/><circle cx="45" cy="68" r="10" stroke="var(--cyan)" stroke-width="1.5"/><circle cx="140" cy="68" r="10" stroke="var(--cyan)" stroke-width="1.5"/></svg>
+      <svg width="180" height="90" viewBox="0 0 180 90" fill="none"><ellipse cx="90" cy="80" rx="80" ry="6" fill="rgba(139,124,246,0.08)"/><path d="M15 65 Q20 35 55 32 L70 20 L125 20 L145 34 Q170 38 170 62 L170 68 L15 68 Z" stroke="var(--grey-dim)" stroke-width="1.5"/><circle cx="45" cy="68" r="10" stroke="var(--violet)" stroke-width="1.5"/><circle cx="140" cy="68" r="10" stroke="var(--violet)" stroke-width="1.5"/></svg>
+    </div>
+    <p class="mono" style="margin-top:50px;color:var(--grey-dim);">"Dreams don't need permission. They need a plan."</p>
+  </div>
+</section>
+
+<!-- ============ TRAVEL ============ -->
+<section id="travel">
+  <div class="wrap">
+    <div class="section-tag"><span class="n">( 08 )</span><span class="t">Travel</span></div>
+    <p class="big-line" data-split>The world is on the list. <span class="fade">Starting from Jodhpur.</span></p>
+
+    <div class="travel-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:60px;">
+      <div class="travel-card tilt-card"><h3>Tokyo</h3><p class="mono">Places I want to experience</p></div>
+      <div class="travel-card tilt-card"><h3>Dubai</h3><p class="mono">Places I want to experience</p></div>
+      <div class="travel-card tilt-card"><h3>London</h3><p class="mono">Places I want to experience</p></div>
+      <div class="travel-card tilt-card"><h3>New York</h3><p class="mono">Places I want to experience</p></div>
+      <div class="travel-card tilt-card"><h3>Singapore</h3><p class="mono">Places I want to experience</p></div>
+      <div class="travel-card tilt-card"><h3>Switzerland</h3><p class="mono">Places I want to experience</p></div>
+      <div class="travel-card tilt-card"><h3>Paris</h3><p class="mono">Places I want to experience</p></div>
+      <div class="travel-card tilt-card"><h3>Iceland</h3><p class="mono">Places I want to experience</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects">
+  <div class="wrap">
+    <div class="section-tag"><span class="n">( 09 )</span><span class="t">Things I'm Building</span></div>
+    <p class="big-line" data-split>Early days. <span class="fade">This section will get more interesting.</span></p>
+
+    <div class="projects-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:60px;">
+      <div class="project-card"><span class="mono" style="color:var(--grey-dim);">Coming soon</span><h3>AI/ML Projects</h3></div>
+      <div class="project-card"><span class="mono" style="color:var(--grey-dim);">Coming soon</span><h3>Python Projects</h3></div>
+      <div class="project-card"><span class="mono" style="color:var(--grey-dim);">Coming soon</span><h3>Creative Tech Projects</h3></div>
+      <div class="project-card"><span class="mono" style="color:var(--grey-dim);">Coming soon</span><h3>Personal Experiments</h3></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEARNING PHILOSOPHY ============ -->
+<section id="philosophy" style="text-align:center;">
+  <div class="wrap">
+    <div class="section-tag" style="justify-content:center;"><span class="n">( 10 )</span><span class="t">Always Learning</span></div>
+    <div class="philosophy-chain" id="philosophyChain">
+      <span class="phi-word">LEARN</span>
+      <span class="phi-arrow">↓</span>
+      <span class="phi-word">BUILD</span>
+      <span class="phi-arrow">↓</span>
+      <span class="phi-word">BREAK</span>
+      <span class="phi-arrow">↓</span>
+      <span class="phi-word">UNDERSTAND</span>
+      <span class="phi-arrow">↓</span>
+      <span class="phi-word phi-final">BUILD BETTER</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="wrap" style="position:relative;">
+    <span class="floating-tag" style="top:-20px;left:40%;transform:rotate(-2deg);">Big dreams.</span>
+    <div class="section-tag"><span class="n">( 11 )</span><span class="t">Contact</span></div>
+    <h2 style="font-size:clamp(2.6rem,7vw,5.4rem);line-height:0.96;" data-split>Let's build something interesting.</h2>
+    <p style="margin-top:26px;color:var(--grey);max-width:480px;font-size:1.05rem;line-height:1.7;">I'm always interested in technology, creative projects, collaborations and interesting ideas.</p>
+
+    <div class="contact-row" style="display:flex;gap:16px;flex-wrap:wrap;margin-top:44px;">
+      <a href="#" class="btn btn-ghost magnetic">Instagram ↗</a>
+      <a href="#" class="btn btn-ghost magnetic">YouTube ↗</a>
+      <a href="#" class="btn btn-ghost magnetic">GitHub ↗</a>
+      <a href="mailto:hello@piyushchoudhary.com" class="btn btn-primary magnetic">Email Me ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div>
+      <div class="nav-name">PIYUSH CHOUDHARY</div>
+      <div class="mono" style="margin-top:8px;">AI/ML Student · Creator · Tech Enthusiast</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="mono">Jodhpur, Rajasthan, India</div>
+      <div class="mono" style="margin-top:8px;">© 2026 Piyush Choudhary — Still at the beginning.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
